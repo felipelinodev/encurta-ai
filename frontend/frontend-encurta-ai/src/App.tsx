@@ -28,7 +28,7 @@ function App() {
 
         <div className='container-do-input'>
           <input type="text" placeholder="Digite sua URL" value={url} onChange={(e) => setUrl(e.target.value)} />
-          <button onClick={handleEncurtar}>Encurtar</button>
+          <button className='encurtar' onClick={handleEncurtar}>Encurtar</button>
         </div>
         <div className='container-de-baixo'>
           <p>Url encurtada: <a href={`localhost:4000/${shortUrl}`} target="_blank">{`localhost:4000/${shortUrl}`}</a></p>
