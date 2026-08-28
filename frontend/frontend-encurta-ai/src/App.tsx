@@ -3,9 +3,17 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
   const [url, setUrl] = useState("")
   const [shortUrl, setShortUrl] = useState("")
+  const [showStats, setShowStats] = useState(false)
+  const [stats, setStats] = useState({
+    id: "",
+    url: "",
+    shortUrl: "",
+    createdAt: "",
+    updatedAt: "",
+    clickCount: 0
+  })
 
   const handleEncurtar = async () => {
     const response = await fetch("http://localhost:4000/links", {
@@ -20,6 +28,17 @@ function App() {
 
   }
 
+  const handleStats = async () => {
+    const response = await fetch("http://localhost:4000/links/" + shortUrl + "/stats")
+    const data = await response.json()
+    setShowStats(true)
+    setStats(data)
+  }
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(`http://localhost:4000/${shortUrl}`)
+  }
+
   return (
     <>
       <section className='container-principal'>
@@ -31,10 +50,24 @@ function App() {
           <button className='encurtar' onClick={handleEncurtar}>Encurtar</button>
         </div>
         <div className='container-de-baixo'>
-          <p>Url encurtada: <a href={`localhost:4000/${shortUrl}`} target="_blank">{`localhost:4000/${shortUrl}`}</a></p>
-          <button className='copy'>Copy</button>
+          <p>Url encurtada: <a href={shortUrl && `http://localhost:4000/${shortUrl}`} target="_blank">{shortUrl && `http://localhost:4000/${shortUrl}`}</a></p>
+          <div className='botoes-baixo'>
+            <button className='copy' onClick={handleCopy}>Copy</button>
+            <button className='copy' onClick={handleStats}>Estatísticas</button>
+          </div>
+
         </div>
+        {showStats && (
+          <section className='container-de-stats'>
+            <p>URL: {stats.url}</p>
+            <p>URL encurtada: {stats.shortUrl}</p>
+            <p>Cliques: {stats.clickCount}</p>
+            <p>Criado em: {stats.createdAt}</p>
+            <p>Atualizado em: {stats.updatedAt}</p>
+          </section>
+        )}
       </section>
+
     </>
   )
 }
