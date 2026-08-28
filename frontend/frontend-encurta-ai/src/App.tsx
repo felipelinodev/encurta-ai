@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import './App.css'
+import { requestEncurtar, requestStats } from './utils/requests'
 
 function App() {
   const [url, setUrl] = useState("")
@@ -16,21 +17,13 @@ function App() {
   })
 
   const handleEncurtar = async () => {
-    const response = await fetch("http://localhost:4000/links", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ url }),
-    })
-    const data = await response.json()
+    const data = await requestEncurtar(url)
     setShortUrl(data.shortUrl)
 
   }
 
   const handleStats = async () => {
-    const response = await fetch("http://localhost:4000/links/" + shortUrl + "/stats")
-    const data = await response.json()
+    const data = await requestStats(shortUrl)
     setShowStats(true)
     setStats(data)
   }
