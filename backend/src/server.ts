@@ -10,10 +10,10 @@ mongoose.connect(MONGO_URI!)
     .then(() => {
         console.log('Conectado ao MongoDB com sucesso!');
         app.listen(PORT, () => {
-            console.log(`🚀 A API está rodando na porta: ${PORT}`);
+            console.log(`A API está rodando na porta: ${PORT}`);
         });
     })
     .catch((err) => {
-        console.error(' Erro ao conectar ao MongoDB:', err);
+        console.error('Erro ao conectar ao MongoDB:', err);
     });
 
