@@ -1,4 +1,5 @@
 {
+    "buildCommand": "",
     "builds": [
         {
             "src": "api/index.ts",
