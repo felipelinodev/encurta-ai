@@ -1,12 +1,14 @@
 import { Router } from "express";
 import LinkController from "../controllers/LinkController";
+import authMiddleware from "../middlewares/authMiddleware";
 
 const router = Router()
 
-router.post("/links", LinkController.create)
+// Rotas protegidas (requerem JWT)
+router.post("/links", authMiddleware, LinkController.create)
+router.get("/links/:code/stats", authMiddleware, LinkController.getStats)
 
-router.get("/links/:code/stats", LinkController.getStats)
-
+// Rota pública (redirect)
 router.get("/:shortUrl", LinkController.redirect)
 
 
