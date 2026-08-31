@@ -1,7 +1,6 @@
-import dotenv from 'dotenv';
-dotenv.config()
 
-const API_URL = process.env.API_URL || "http://localhost:4000/links";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/links";
 
 export const requestEncurtar = async (url: string) => {
     const response = await fetch(API_URL, {

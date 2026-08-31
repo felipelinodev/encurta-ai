@@ -17,4 +17,7 @@ const LinkSchema = new Schema<Link>(
     { timestamps: true }
 );
 
-export default mongoose.model<Link>('Link', LinkSchema);
+// Apaga automaticamente os documentos 7 dias após a criação
+LinkSchema.index({ createdAt: 1 }, { expireAfterSeconds: 7 * 24 * 60 * 60 });
+
+export default mongoose.model<Link>('Link', LinkSchema);
