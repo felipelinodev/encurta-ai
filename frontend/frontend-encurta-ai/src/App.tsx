@@ -28,8 +28,13 @@ function App() {
     setStats(data)
   }
 
+  const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:4000/links").replace(/\/links\/?$/, '')
+  const fullShortUrl = shortUrl ? `${API_BASE_URL}/${shortUrl}` : ''
+
   const handleCopy = () => {
-    navigator.clipboard.writeText(`http://localhost:4000/${shortUrl}`)
+    if (fullShortUrl) {
+      navigator.clipboard.writeText(fullShortUrl)
+    }
   }
 
   return (
@@ -43,7 +48,7 @@ function App() {
           <button className='encurtar' onClick={handleEncurtar}>Encurtar</button>
         </div>
         <div className='container-de-baixo'>
-          <p>Url encurtada: <a href={shortUrl && `http://localhost:4000/${shortUrl}`} target="_blank">{shortUrl && `http://localhost:4000/${shortUrl}`}</a></p>
+          <p>Url encurtada: <a href={fullShortUrl} target="_blank" rel="noreferrer">{fullShortUrl}</a></p>
           <div className='botoes-baixo'>
             <button className='copy' onClick={handleCopy}>Copy</button>
             <button className='copy' onClick={handleStats}>Estatísticas</button>
